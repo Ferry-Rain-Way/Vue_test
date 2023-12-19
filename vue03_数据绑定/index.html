@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue03</title>
+   <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+   <script type="text/javascript" src="../js/vue.js"></script>
+    <script>
+            Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+    </script>
+</head>
+<body>
+<!-- 容器准备 -->
+<div id="root">
+    {{name}}
+   单项数据绑定 <input type="text" v-bind:value="name">
+   <!-- 
+       改动输入框中的内容,页面数据变化
+       但是不会影响Vue中data的数据 → 单向绑定
+    -->
+    <br>
+    双向数据绑定 <input type="text" v-model:value="name">
+    双向数据绑定 <input type="text" v-model="name">
+    <!-- 
+        页面数据变化,Vue数据也会变化
+     -->
+     <br><br>
+     注意:双向数据绑定 v-model 只能用在表单类元素(含有value属性)的标签上<br>
+     v-model:value 简写为 v-model ,因为v-model默认收集的就是value<br>
+     所以以下代码是错误的<br>
+     <!-- <h2 v-model:x="name">这是一个二级标题 </h2> -->
+     v-model is not supported on this element type. 
+
+
+
+</div>
+<!-- Vue代码 -->
+<script type="text/javascript">
+    new Vue({
+        el:"#root",//挂载点
+        data :{ //数据
+            name:"尚硅谷"
+        }
+    })
+</script>
+
+</body>
+</html>

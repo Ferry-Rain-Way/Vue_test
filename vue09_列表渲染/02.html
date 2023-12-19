@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+          <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+          <script type="text/javascript" src="../js/vue.js"></script></script>
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+            <!-- 引入样式 -->
+      <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+      <script>
+      Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+      </script>
+</head>
+<body>
+<!-- 容器准备 -->
+  <div id="root">
+{{animal.name}}<br>
+{{animal.color}}<br>
+等待添加属性:{{animal.type}}
+  </div>
+<!-- Vue代码 -->
+  <script type="text/javascript">
+        //Vue只传入一个"配置对象"参数
+     const vm =   new Vue({
+          el:'#root',
+          data :{
+              animal :{
+                  name :"小黑",
+                  color:"黑",
+                  age:3
+              },
+              master:['小郭']
+            }
+        })
+  </script>
+
+</body>
+</html>

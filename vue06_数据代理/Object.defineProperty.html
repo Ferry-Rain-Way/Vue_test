@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+    <script type="text/javascript" src="../js/vue.js"></script></script>
+    <script>
+    Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+    </script>
+</head>
+<body>
+<!-- 容器准备 -->
+<div id="root">
+
+</div>
+
+<script type="text/javascript">
+    let person = {
+        name:"张三",
+        sex:"男"
+    }
+
+    /*
+    Object.defineProperty(person,'age',{
+        value :20,
+        enumerable:true,//属性是否可以被枚举 ,可以使用 Object.keys(person)进行验证
+        writable :true,//属性的属性值是否可以被修改
+        configurable:true//属性是否可以被删除
+    })
+    */
+
+//需求存在一个变量number ,对person对象新增一个属性age,age的值由number 决定,且number的变化会引起age的变化
+    let number  = 18;
+    Object.defineProperty(person,'age',{
+
+        //当有人读取age属性时get函数被触发
+        get :function (){
+            console.log("get执行");
+            return number;
+        },
+        //当有人修改age属性时set函数被触发
+        set : function(value){
+            console.log("set执行");
+            number = value;
+        }
+
+    })
+
+</script>
+
+</body>
+</html>

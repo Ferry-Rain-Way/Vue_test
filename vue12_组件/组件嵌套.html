@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件嵌套</title>
+          <!-- vue开发环境版本，包含了有帮助的命令行警告 --> 
+          <script type="text/javascript" src="../js/vue.js"></script></script>
+        <!-- 引入element-ui组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+            <!-- 引入element-ui样式 -->
+      <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+      <script>
+      Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+      </script>
+</head>
+<body>
+<!-- 容器准备 -->
+  <div id="root">
+    
+  </div>
+
+<!-- Vue代码 -->
+  <script type="text/javascript">
+// 由于存在加载顺序问题,所以把子组件写在前面
+
+//市组件
+  let city = Vue.extend({
+      data(){
+        return {
+          name : "蚌埠市",
+          detailedAddress:"怀远县榴城镇....."
+        }
+      },
+      template:`<p>{{name}}--{{detailedAddress}}</p>`
+  })
+
+
+// //省组件province(是city的父组件)
+    let province = Vue.extend({
+      data(){
+        return {
+            name : "安徽省"
+        }
+      },
+      components:{
+          city //子组件
+      },
+      //city组件写在此处,由province组件管理,且不用在app组件中再写
+      template:`<div>{{name}} <city></city> </div>`,
+    })
+
+
+//--------------
+    let hello = Vue.extend({
+        data(){
+          return {
+            content:"你好啊!吃了没",
+          }
+        },
+        methods:{
+            sayHello(){
+              console.log(this.content);
+            }
+        },
+        template:`<p @click="sayHello">{{content}}</p>`
+    })
+
+
+
+  let app = Vue.extend({
+          components:{
+            province,// 'province':province 的简写
+            sayHello:hello //hello只是做一个中转,具体标签的名字还是得看属性名 sayHello
+          },
+          template:`<div><province></province><sayHello></sayHello></div>`
+  })
+  
+// vm只管理app组件
+    new Vue({
+        el:'#root',
+        //添加模板(需要注意的是template中只能存在一个根元素,<template>不行)
+        template:`<app></app>`,//这样写上面的html中就不用写东西了
+
+        //只管理app
+        components:{
+            app
+        }
+
+    })
+
+
+
+  </script>
+
+</body>
+</html>

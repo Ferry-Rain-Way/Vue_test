@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+          <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+          <script type="text/javascript" src="../js/vue.js"></script></script>
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+            <!-- 引入样式 -->
+      <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+      <script>
+      Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+      </script>
+</head>
+<body>
+<!-- 容器准备 -->
+  <div id="root">
+    <!-- 3、组件使用 -->
+      <school-name></school-name>
+  </div>
+
+<!-- Vue代码 -->
+  <script type="text/javascript">
+
+
+        // 1、 组件定义(创建):
+        let schoolCop = Vue.extend({
+                //注意点1):组件中不能使用 el 
+                //注意点2):组件中的data必须使用函数式,返回一个对象
+                 //使用name可以配置Vue开发者工具中的组件名
+                   name:"school-name",//这种写法在开发这工具中会显示为SchoolName
+                  data: function(){
+                      return {
+                            'name':"尚硅谷",
+                            address:"北京"
+                      }
+                  },
+                  template: `<p>学校:{{name}}<br>地址:{{address}}</p>`
+        })
+
+
+        //Vue只传入一个"配置对象"参数
+        new Vue({
+          el:'#root',
+          //2、组件注册
+          components:{
+            'school-name':schoolCop
+          }
+        })
+
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+          <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+          <script type="text/javascript" src="../js/vue.js"></script></script>
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+            <!-- 引入样式 -->
+      <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+      <script>
+      Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+      </script>
+</head>
+<body>
+<!-- 容器准备 -->
+  <div id="root">
+    <form>
+      账号:<el-input type="text" placeholder="username" v-model="username" size="mini"  ></el-input><br><br>
+
+      密码:<el-input type="password" placeholder="password" v-model="password" show-password  size="mini"></el-input><br><br>
+
+      性别:
+        <el-radio v-model="radio" label="1" >男</el-radio>
+        <el-radio v-model="radio" label="2" >女</el-radio><br><br>
+
+      年龄:
+      <el-input type="number" v-model.number="age" size="mini" ></el-input><br><br>
+
+      爱好:
+      <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+      <div style="margin: 15px 0;"></div>
+      <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+        <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+      </el-checkbox-group>
+      <br><br>
+
+      所属校区:
+      <el-select v-model="value" placeholder="请选择" size="mini">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <br><br>
+
+        <!--文本域-->
+        <el-row >
+          <el-col :span="3">
+          其他信息:
+          </el-col>
+          <el-col :span="8">
+            <el-input  type="textarea" v-model="textarea"   class=".textarea" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-row>
+
+
+          <el-checkbox v-model="agree">
+            阅读并接受<a href="#">《用户协议》</a>
+          </el-checkbox>
+          <br><br>
+
+        <el-button type="submit"  @click="submitInfo" size="mini" >提交</el-button>
+        <!-- <button>提交</button> -->
+    </form>
+  </div>
+<!-- Vue代码 -->
+  <script type="text/javascript">
+        //Vue只传入一个"配置对象"参数
+        const cityOptions = ['抽烟','喝酒','烫头'];
+        const vm = new Vue({
+          el:'#root',
+          data :{
+                  username:"",
+                  password:"",
+                  age:'',
+                  radio:'1',
+
+                  checkAll: false,
+                  checkedCities: [],
+                  cities: cityOptions,
+                  isIndeterminate: true,
+
+                  value:'',
+                  options: [{value: '01',label: '北京'}, 
+                                      {value: '02',label: '天津'}, 
+                                      {value: '03',label: '上海'},
+                                      {value: '04',label: '武汉'}],
+                textarea:'',
+                agree:false
+
+            },
+            methods: {
+                    handleCheckAllChange(val) {
+                      this.checkedCities = val ? cityOptions : [];
+                      this.isIndeterminate = false;
+                    },
+                    handleCheckedCitiesChange(value) {
+                      let checkedCount = value.length;
+                      this.checkAll = checkedCount === this.cities.length;
+                      this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+                    },
+
+                    submitInfo :function(){
+                      // console.log(vm._data);
+                      console.log(JSON.stringify(this._data));
+
+                      const h = this.$createElement;
+                      this.$notify({
+                        title: '已收集信息:',
+                        message: h('i', { style: 'color: teal'},JSON.stringify(this._data))
+                      });
+                    }
+                  }
+        })
+  </script>
+
+
+
+<style>
+ .el-input {
+  width:180px;
+}
+
+
+/* element-ui自带样式 */
+    .el-row {
+      margin-bottom: 20px;
+    }
+    .el-col {
+      margin-left: 5px;
+      border-radius: 4px;
+    }
+    .bg-purple-dark {
+      background: #99a9bf;
+    }
+    .bg-purple {
+      background: #d3dce6;
+    }
+    .bg-purple-light {
+      background: #e5e9f2;
+    }
+    .grid-content {
+      border-radius: 4px;
+      min-height: 36px;
+    }
+    .row-bg {
+      padding: 10px 0;
+      background-color: #f9fafc;
+    }
+</style>
+</body>
+</html>

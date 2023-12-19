@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+      <script type="text/javascript" src="../js/vue.js"></script></script>
+      <!-- 引入组件库 -->
+      <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+      <script>
+      Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+      </script>
+</head>
+<body>
+<!-- 容器准备 -->
+  <div id="root">
+      今天天气真{{info}}
+
+      <button @click="change">切换</button>
+  </div>
+<!-- Vue代码 -->
+  <script type="text/javascript">
+        //Vue只传入一个"配置对象"参数
+        const vm = new Vue({
+          el:'#root',
+          data :{
+                isHot:true
+            },
+            computed:{
+                info:function(){
+                    return this.isHot?'炎热':'凉爽'
+                }
+            },
+            methods: {
+              change :function(){
+                    this.isHot = !this.isHot
+              }
+            },
+            //监听器的第一种写法
+            watch:{
+                    isHot:{
+                        //监听器,监听isHot属性修改
+
+                        immediate:true,//当为true时,初始化时handler会执行一次
+
+                        //匿名函数默认接收两个参数newValue,oldValue,参数名不可以更改
+                        handler:function(newValue,oldValue){
+                            console.log('isHot属性修改',newValue,oldValue);
+                        }
+                    }
+              }
+        })
+
+        //监听器的第二种写法
+        //注意 此处的info需要添加引号
+        //若监视的值不存在,没有意义,但是不报错
+        vm.$watch('info',{
+            handler:function(newValue,oldValue){
+                console.log('info属性修改',newValue,oldValue);
+            }
+        })
+  </script>
+
+</body>
+</html>
